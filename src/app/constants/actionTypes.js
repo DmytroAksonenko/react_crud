@@ -1,0 +1,4 @@
+// Book
+export const REQUEST_BOOK = 'REQUEST_BOOK';
+export const RECEIVE_BOOK = 'RECEIVE_BOOK';
+export const ERROR_RECEIVE_BOOK = 'ERROR_RECEIVE_BOOK';
