@@ -9,7 +9,7 @@ import {
     ERROR_RECEIVE_BOOK,
     RECEIVE_BOOK,
     REQUEST_BOOK,
-} from '../constants/actionTypes';
+} from 'constants/actionTypes';
 
 const errorReceiveUser = () => ({
     type: ERROR_RECEIVE_BOOK,

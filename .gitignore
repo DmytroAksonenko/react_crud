@@ -5,3 +5,4 @@ bin/
 .idea/
 
 node_modules
+src/config/index.js
