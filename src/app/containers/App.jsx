@@ -11,6 +11,7 @@ import {
     fetchBook,
 } from '../actions/book';
 */
+import Header from 'components/Header';
 import HomePage from 'pageProviders/Home';
 import EditorPage from 'pageProviders/Editor';
 import * as PAGES from 'constants/pages';
@@ -33,10 +34,9 @@ const App = () => {
 	// 		componentDidMount: true,
 	// 	}));
 	// }, []);
-	console.log("test");
 	return (
 		<BrowserRouter>
-			<div>Header</div>
+			<Header />
 			<Switch>
 				<Route path={`/${PAGES.HOME}`}>
 					<HomePage/>
@@ -49,6 +49,7 @@ const App = () => {
 		</BrowserRouter>
 	);
 };
+const sum = (a, b) => a + b;
 
-
+const result = sum(2)(2);
 export default App;
