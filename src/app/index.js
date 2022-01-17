@@ -3,7 +3,7 @@ import { applyMiddleware, createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 
-import App from './containers/App.jsx';
+import App from './containers/OldReactApp.jsx';
 import bookReducer from './reducers/book';
 
 const rootReducer = combineReducers({

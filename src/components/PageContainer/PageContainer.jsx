@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const getClasses = makeStyles(() => ({
     container: {
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'start',
     },
     content: {
         display: 'flex',

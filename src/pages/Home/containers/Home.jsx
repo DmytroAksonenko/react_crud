@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {useState} from 'react';
 import {Button} from '@mui/material';
+import NewBookButton from 'components/Button';
 import Menu from '@mui/material/Menu';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
@@ -16,13 +17,16 @@ class Home extends Component {
 	render() {
 		return (
 			<div>
-					<Button
-						style={{margin: ['25%'], display: "flex",}}
-						variant="outlined"
-						endIcon={<AddCircleIcon/>}
-					>
-						ADD NEW
-					</Button>
+				<div>
+				<NewBookButton/>
+					{/*<Button*/}
+						{/*style={{margin: ['25%'], display: "flex",}}*/}
+						{/*variant="outlined"*/}
+						{/*endIcon={<AddCircleIcon/>}*/}
+					{/*>*/}
+						{/*ADD NEW*/}
+					{/*</Button>*/}
+				</div>
 				<div>
 					<PopupState variant="popover" popupId="popup-menu">
 						{(popupState) => (

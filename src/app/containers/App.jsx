@@ -1,5 +1,4 @@
-import React, {Component} from "react";
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {
 	BrowserRouter,
@@ -7,26 +6,35 @@ import {
 	Route,
 	Redirect
 } from 'react-router-dom';
-/*import {
+import {
     fetchBook,
 } from '../actions/book';
-*/
 import Header from 'components/Header';
 import HomePage from 'pageProviders/Home';
 import EditorPage from 'pageProviders/Editor';
 import * as PAGES from 'constants/pages';
+import importedBookActions from '../actions/book';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-const testFunc = () => {
-	console.log("test msg");
-};
-
-const App = () => {
+const App = (props) => {
 	const [state, setState] = useState({
 		componentDidMount: true,
 	});
 
-	// const dispatch = useDispatch();
+
+	// function sum(a) {
+	// 	return function (b) {
+	// 		return (a + b);
+	// 	}
+	// }
 	//
+	// console.log(sum(2)(3));
+
+	console.log(props);
+
+	// const dispatch = useDispatch();
+
 	// useEffect(() => {
 	// 	dispatch(fetchBook());
 	// 	setState(prevState => ({
@@ -34,9 +42,15 @@ const App = () => {
 	// 		componentDidMount: true,
 	// 	}));
 	// }, []);
+
 	return (
+		<div>
+			<div>
+				{"!!!!!!!!!!!!!!!!!!!!!!" + props.author}
+			</div>
+
 		<BrowserRouter>
-			<Header />
+			<Header/>
 			<Switch>
 				<Route path={`/${PAGES.HOME}`}>
 					<HomePage/>
@@ -47,9 +61,23 @@ const App = () => {
 				<Redirect from="*" to={`/${PAGES.HOME}`}/>
 			</Switch>
 		</BrowserRouter>
+		</div>
 	);
 };
-const sum = (a, b) => a + b;
 
-const result = sum(2)(2);
-export default App;
+const mapReduxStateToProps = state => ({
+	author: state.book.bookItem.author,
+	isFailedFetchBook: state.book.isFailedFetchBook,
+	isFetchingBook: state.book.isFetchingBook,
+});
+
+const mapDispatchToProps = (dispatch) => {
+	const {
+		fetchBook,
+	} = bindActionCreators(importedBookActions, dispatch);
+	return {
+		actionFetchBook: fetchBook,
+	};
+};
+
+export default connect(mapReduxStateToProps, mapDispatchToProps)(App);
