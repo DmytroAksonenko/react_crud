@@ -1,7 +1,7 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 
-const getClasses = makeStyles(() => ({
+export const getClasses = makeStyles(() => ({
 	container: {
 		alignItems: 'center',
 		display: 'flex',

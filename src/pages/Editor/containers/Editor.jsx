@@ -1,32 +1,56 @@
-import React, {Component} from "react";
+import React from "react";
 import Input from '@mui/material/Input';
 import {Button} from "@mui/material";
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import {makeStyles} from "@material-ui/core";
+import {bindActionCreators} from "redux";
+import importedBooksActions from "../../Home/actions/books";
+import {connect} from "react-redux";
 
-class Editor extends Component {
+class Editor extends React.Component {
 	constructor(props) {
 		super(props);
+	}
+	componentDidMount() {
+		console.log(this.props)
 	}
 
 	render() {
 		return (
 			<div>
+				<div>
 					<div>
-							<Input defaultValue="Name"/>
-							<Input defaultValue="Author"/>
-							<Input defaultValue="Genre"/>
-							<Input defaultValue="Price"/>
+						<Input defaultValue="Name"/>
 					</div>
 					<div>
-							<Button	variant="outlined">
-								UPDATE
-							</Button				>
+						<Input defaultValue="Author"/>
 					</div>
+					<div>
+						<Input defaultValue="Genre"/>
+					</div>
+					<div>
+						<Input defaultValue="Price"/>
+					</div>
+				</div>
+				<div>
+					<Button variant="outlined">
+						UPDATE
+					</Button>
+				</div>
 			</div>
 		);
 	}
 }
 
-export default Editor;
+const mapReduxStateToProps = state => ({
+	list: state.reducer.list,
+});
+
+const mapDispatchToProps = (dispatch) => {
+	const {
+		fetchBooks,
+	} = bindActionCreators(importedBooksActions, dispatch);
+	return {
+		actionFetchBooks: fetchBooks,
+	};
+};
+
+export default connect(mapReduxStateToProps, mapDispatchToProps)(Editor);

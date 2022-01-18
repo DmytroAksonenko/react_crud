@@ -16,6 +16,5 @@ const store = createStore(
 export default() => (
     <Provider store={store}>
         <Home/>
-      {/*<Home {...props} />*/}
     </Provider>
 );

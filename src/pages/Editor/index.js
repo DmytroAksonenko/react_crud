@@ -6,16 +6,15 @@ import Editor from './containers/Editor';
 import reducer from './reducers/reducer';
 
 const rootReducer = combineReducers({
-    reducer,
+  reducer,
 });
 const store = createStore(
-    rootReducer,
-    applyMiddleware(thunkMiddleware),
+  rootReducer,
+  applyMiddleware(thunkMiddleware),
 );
 
 export default() => (
-    <Provider store={store}>
-        <Editor/>
-      {/*<Home {...props} />*/}
-    </Provider>
+  <Provider store={store}>
+    <Editor/>
+  </Provider>
 );
