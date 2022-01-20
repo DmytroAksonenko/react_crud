@@ -1,5 +1,5 @@
-import {Button} from '@mui/material';
-import AddCircleIcon from "../../pages/Home/containers/Home";
+import Button from '@material-ui/core/Button';
+import AddCircleIcon from '../Icon/AddCircle';
 import React from "react";
 
 const NewBookButton = () => {
@@ -7,7 +7,7 @@ const NewBookButton = () => {
 		<Button
 			// style={{margin: ['25%'], display: "flex",}}
 			variant="outlined"
-			// endIcon={<AddCircleIcon/>}
+			endIcon={<AddCircleIcon color="black" size={24} />}
 		>
 			ADD NEW
 		</Button>

@@ -1,76 +1,115 @@
 import React from "react";
 import {Button} from '@mui/material';
 import NewBookButton from 'components/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import PopupState, {bindTrigger, bindMenu} from 'material-ui-popup-state';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Popper from '@material-ui/core/Popper';
 import {Link} from "react-router-dom";
 import {bindActionCreators} from "redux";
 import importedBooksActions from "../actions/books";
 import {connect} from "react-redux";
 
-// import getClasses from 'components/Header';
-
 class Home extends React.Component {
 	constructor(props) {
 		super(props);
-
+		this.state = {
+			bookPopperAnchor: null,
+			bookPopperItem: null,
+			isMouseOverPopper: false,
+		};
 	}
 
 	componentDidMount() {
 		this.props.actionFetchBooks();
 	}
 
-
-
 	render() {
-		// const classes = getClasses();
-
+		console.log(this.state);
 		return (
 
 			<div>
 				<div>
 					<NewBookButton/>
 				</div>
-				<div>
-					{/*<div className={classes.container}>*/}
-					{this.props.list.map((item) => {
-						return <PopupState variant="popover" popupId="popup-menu">
-							{(popupState) => (
-								<React.Fragment>
-									<Button
-										variant="outlined" {...bindTrigger(popupState)}
-										onMouseOver={popupState.open}
-										// onMouseOut={popupState.close}
-									>
-										<div>
-											<div>
-												<ol style={{
-													color: 'black', fontStyle: 'italic', background: '#008080',
-													textAlign: 'center', alignItems: 'center'
-												}}>{item.name}</ol>
-											</div>
-											<div>
-												{'Author: ' + item.author}
-											</div>
-											<div>
-												{'Genre: ' + item.genre}
-											</div>
-											<div>
-												{'Price: ' + item.price}
-											</div>
-										</div>
-									</Button>
-									<Menu {...bindMenu(popupState)}>
-										<MenuItem onClick={popupState.close}>
-											<Link to="/editor">UPDATE</Link>
-										</MenuItem>
-										<MenuItem onClick={popupState.close}>DELETE</MenuItem>
-									</Menu>
-								</React.Fragment>
-							)}
-						</PopupState>
-					})}
+				<div style={{
+					display: 'flex',
+				}}>
+					{this.props.list.map((item) => (
+						<div
+							onMouseEnter={(event) => this.setState({
+								bookPopperAnchor: event.currentTarget,
+								bookPopperItem: item,
+								isMouseOverPopper: true,
+							})}
+							onMouseLeave={() => {
+								setTimeout(() => {
+									if (!this.state.isMouseOverPopper && !this.state.bookPopperAnchor && !this.bookPopperItem) {
+										this.setState({
+											bookPopperAnchor: null,
+											bookPopperItem: null,
+											isMouseOverPopper: false,
+										});
+									}
+								}, 200);
+							}}
+						>
+							<Button variant="outlined">
+								<div>
+									<div>
+										<ol style={{
+											color: 'black', fontStyle: 'italic', background: '#008080',
+											textAlign: 'center', alignItems: 'center'
+										}}>{item.name}</ol>
+									</div>
+									<div>
+										{'Author: ' + item.author}
+									</div>
+									<div>
+										{'Genre: ' + item.genre}
+									</div>
+									<div>
+										{'Price: ' + item.price}
+									</div>
+								</div>
+							</Button>
+						</div>
+					))}
+					<Popper
+						anchorEl={this.state.bookPopperAnchor}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'left',
+						}}
+						open={this.state.bookPopperAnchor}
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'left',
+						}}
+						onMouseEnter={() => this.setState({
+							isMouseOverPopper: true,
+						})}
+						onMouseLeave={() => this.setState({
+							isMouseOverPopper: false,
+							bookPopperAnchor: null,
+							bookPopperItem: null,
+						})}
+					>
+						<List>
+							<ListItem>
+								<Link to="/editor">
+									UPDATE
+								</Link>
+							</ListItem>
+							<ListItem
+								onClick={() => this.setState({
+									bookPopperAnchor: null,
+									bookPopperItem: null,
+								})}
+							>
+								DELETE
+							</ListItem>
+						</List>
+					</Popper>
 				</div>
 			</div>
 		);
