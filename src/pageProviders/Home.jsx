@@ -3,9 +3,9 @@ import HomePage from 'pages/Home';
 import PageContainer from 'components/PageContainer';
 
 const Home = () => (
-        <PageContainer>
-            <HomePage />
-        </PageContainer>
+	<PageContainer>
+		<HomePage/>
+	</PageContainer>
 );
 
 export default Home;

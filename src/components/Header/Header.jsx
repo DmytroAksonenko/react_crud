@@ -3,6 +3,7 @@ import {makeStyles} from '@material-ui/core/styles';
 
 export const getClasses = makeStyles(() => ({
 	container: {
+		color: 'black',
 		alignItems: 'center',
 		display: 'flex',
 		background: '#008080',

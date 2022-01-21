@@ -4,6 +4,7 @@ import NewBookButton from 'components/Button';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Popper from '@material-ui/core/Popper';
+import Box from '@material-ui/core/Box';
 import {Link} from "react-router-dom";
 import {bindActionCreators} from "redux";
 import importedBooksActions from "../actions/books";
@@ -16,6 +17,7 @@ class Home extends React.Component {
 			bookPopperAnchor: null,
 			bookPopperItem: null,
 			isMouseOverPopper: false,
+			bookId: 0,
 		};
 	}
 
@@ -25,6 +27,7 @@ class Home extends React.Component {
 
 	render() {
 		console.log(this.state);
+		console.log(this.state.bookPopperItem);
 		return (
 
 			<div>
@@ -42,14 +45,18 @@ class Home extends React.Component {
 								isMouseOverPopper: true,
 							})}
 							onMouseLeave={() => {
+								this.setState({
+									isMouseOverPopper: false,
+								});
 								setTimeout(() => {
-									if (!this.state.isMouseOverPopper && !this.state.bookPopperAnchor && !this.bookPopperItem) {
+									if (!this.state.isMouseOverPopper) {
 										this.setState({
 											bookPopperAnchor: null,
 											bookPopperItem: null,
 											isMouseOverPopper: false,
 										});
 									}
+
 								}, 200);
 							}}
 						>
@@ -76,15 +83,7 @@ class Home extends React.Component {
 					))}
 					<Popper
 						anchorEl={this.state.bookPopperAnchor}
-						anchorOrigin={{
-							vertical: 'bottom',
-							horizontal: 'left',
-						}}
 						open={this.state.bookPopperAnchor}
-						transformOrigin={{
-							vertical: 'top',
-							horizontal: 'left',
-						}}
 						onMouseEnter={() => this.setState({
 							isMouseOverPopper: true,
 						})}
@@ -94,22 +93,30 @@ class Home extends React.Component {
 							bookPopperItem: null,
 						})}
 					>
-						<List>
-							<ListItem>
-								<Link to="/editor">
-									UPDATE
-								</Link>
-							</ListItem>
-							<ListItem
-								onClick={() => this.setState({
-									bookPopperAnchor: null,
-									bookPopperItem: null,
-								})}
-							>
-								DELETE
-							</ListItem>
-						</List>
+						<Box sx={{border: 1, p: 1, bgcolor: '#008080'}}>
+							<List>
+								<ListItem>
+									<Link
+										to={{
+											pathname: "/editor",
+											search: "?bookId=23434",
+										}}
+									>
+										UPDATE
+									</Link>
+								</ListItem>
+								<ListItem
+									onClick={() => this.setState({
+										bookPopperAnchor: null,
+										bookPopperItem: null,
+									})}
+								>
+									DELETE
+								</ListItem>
+							</List>
+						</Box>
 					</Popper>
+
 				</div>
 			</div>
 		);

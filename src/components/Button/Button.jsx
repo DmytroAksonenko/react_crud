@@ -1,18 +1,22 @@
+import React from "react";
 import Button from '@material-ui/core/Button';
 import AddCircleIcon from '../Icon/AddCircle';
-import React from "react";
+import {Link} from "react-router-dom";
 
-const NewBookButton = () => {
+export const NewBookButton = () => {
 	return (
 		<Button
-			// style={{margin: ['25%'], display: "flex",}}
 			variant="outlined"
-			endIcon={<AddCircleIcon color="black" size={24} />}
+			endIcon={<AddCircleIcon color="black" size={24}/>}
 		>
-			ADD NEW
+			<Link to={{
+				pathname: "/editor",
+				search: "?bookId=null",
+			}}>
+				ADD NEW
+			</Link>
 		</Button>
 	)
 };
-
 
 export default NewBookButton;

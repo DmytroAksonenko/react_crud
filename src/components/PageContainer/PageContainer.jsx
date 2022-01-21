@@ -8,7 +8,7 @@ const getClasses = makeStyles(() => ({
     },
     content: {
         display: 'flex',
-        width: '1080px',
+        width: '100%',
     },
 }));
 

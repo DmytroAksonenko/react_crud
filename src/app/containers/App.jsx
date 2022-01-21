@@ -1,7 +1,7 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import importedBookActions from '../actions/book';
-import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux';
+// import importedBookActions from '../actions/book';
+// import { connect } from 'react-redux';
 import {
 	BrowserRouter,
 	Switch,
@@ -40,20 +40,21 @@ class App extends React.Component {
 	}
 }
 
-const mapReduxStateToProps = state => ({
-	author: state.book.author,
-	name: state.book.name,
-	isFailedFetchBook: state.book.isFailedFetchBook,
-	isFetchingBook: state.book.isFetchingBook,
-});
+// const mapReduxStateToProps = state => ({
+// 	author: state.book.author,
+// 	name: state.book.name,
+// 	isFailedFetchBook: state.book.isFailedFetchBook,
+// 	isFetchingBook: state.book.isFetchingBook,
+// });
+//
+// const mapDispatchToProps = (dispatch) => {
+// 	const {
+// 		fetchBook,
+// 	} = bindActionCreators(importedBookActions, dispatch);
+// 	return {
+// 		actionFetchBook: fetchBook,
+// 	};
+// };
 
-const mapDispatchToProps = (dispatch) => {
-	const {
-		fetchBook,
-	} = bindActionCreators(importedBookActions, dispatch);
-	return {
-		actionFetchBook: fetchBook,
-	};
-};
-
-export default connect(mapReduxStateToProps, mapDispatchToProps)(App);
+// export default connect(mapReduxStateToProps, mapDispatchToProps)(App);
+export default App;

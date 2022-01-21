@@ -1,43 +1,60 @@
 import {
-	ERROR_RECEIVE_BOOKS,
-	RECEIVE_BOOKS,
-	REQUEST_BOOKS,
+	ERROR_RECEIVE_BOOK,
+	RECEIVE_BOOK,
+	REQUEST_BOOK,
 } from '../constants/actionTypes';
 
 const initialState = {
-	list: [],
-	isFailedFetchBooks: false,
-	isFetchingBooks: false,
+	// bookItem:{
+	//     name: 'initial name',
+	//     author: 'initial author',
+	//     genre: '',
+	//     price: 0,
+	// },
+	name: '',
+	author: '',
+	genre: '',
+	price: 0,
+	isFailedFetchBook: false,
+	isFetchingBook: false,
 };
 
 export default (state = initialState, action) => {
 	switch (action.type) {
-		case ERROR_RECEIVE_BOOKS: {
+		case ERROR_RECEIVE_BOOK: {
 			return {
 				...state,
-				isFailedFetchBooks: true,
-				isFetchingBooks: false,
+				isFailedFetchBook: true,
+				isFetchingBook: false,
 			};
 		}
 
-		case RECEIVE_BOOKS: {
+		case RECEIVE_BOOK: {
 			const {
-				list,
+				// bookItem,
+				name,
+				author,
+				genre,
+				price,
 			} = action.payload;
 
 			return {
 				...state,
-				list: list || initialState.list,
-				isFailedFetchBooks: false,
-				isFetchingBooks: false,
+				// bookItem: bookItem || initialState.bookItem,
+				name: name || initialState.name,
+				author: author || initialState.author,
+				genre: genre || initialState.genre,
+				price: price || initialState.price,
+				isFailedFetchBook: false,
+				isFetchingBook: false,
 			};
 		}
 
-		case REQUEST_BOOKS: {
+		case REQUEST_BOOK: {
 			return {
 				...state,
-				isFailedFetchBooks: false,
-				isFetchingBooks: true,
+				isFailedFetchBook: false,
+				isFetchingBook: true,
 			};
 		}
 
