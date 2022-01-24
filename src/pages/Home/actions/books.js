@@ -22,10 +22,10 @@ const getBooks = () => {
 	} = config;
 
 	return getJson({
-		url: `${BASE_URL}${BOOKS_SERVICE}/book/get`,
+		url: `${BASE_URL}${BOOKS_SERVICE}/getAll`,
 	}).catch(() => {
 		const storage = {
-			list: [
+			books: [
 				{
 					name: 'cool book',
 					author: 'author1',

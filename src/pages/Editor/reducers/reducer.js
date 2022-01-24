@@ -5,16 +5,11 @@ import {
 } from '../constants/actionTypes';
 
 const initialState = {
-	// bookItem:{
-	//     name: 'initial name',
-	//     author: 'initial author',
-	//     genre: '',
-	//     price: 0,
-	// },
+	id: '',
 	name: '',
 	author: '',
 	genre: '',
-	price: 0,
+	price: '',
 	isFailedFetchBook: false,
 	isFetchingBook: false,
 };
@@ -31,7 +26,7 @@ export default (state = initialState, action) => {
 
 		case RECEIVE_BOOK: {
 			const {
-				// bookItem,
+				id,
 				name,
 				author,
 				genre,
@@ -40,7 +35,7 @@ export default (state = initialState, action) => {
 
 			return {
 				...state,
-				// bookItem: bookItem || initialState.bookItem,
+				id: id || initialState.id,
 				name: name || initialState.name,
 				author: author || initialState.author,
 				genre: genre || initialState.genre,

@@ -2,9 +2,9 @@ import React from 'react';
 import EditorPage from 'pages/Editor';
 import PageContainer from 'components/PageContainer';
 
-const Editor = () => (
+const Editor = (props) => (
 	<PageContainer>
-		<EditorPage />
+		<EditorPage {...props} />
 	</PageContainer>
 );
 

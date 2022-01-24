@@ -15,22 +15,25 @@ const errorReceiveBook = () => ({
 	type: ERROR_RECEIVE_BOOK,
 });
 
-const getBook = () => {
+const getBook = ({
+	id,
+}) => {
 	const {
 		BASE_URL,
 		BOOKS_SERVICE,
 	} = config;
 
 	return getJson({
-		url: `${BASE_URL}${BOOKS_SERVICE}/book/get`,
+		url: `${BASE_URL}${BOOKS_SERVICE}/${id}`,
 	}).catch(() => {
 		const storage = {
-			// 'bookItem': {
-			name: 'book1',
-			author: 'author1',
-			genre: 'genre1',
-			price: 50,
-			// },
+
+			id: null,
+			name: 'error',
+			author: '',
+			genre: '',
+			price: '',
+
 		};
 		return storage;
 	});
@@ -45,10 +48,12 @@ const requestBook = () => ({
 	type: REQUEST_BOOK,
 });
 
-export const fetchBook = () => (dispatch) => {
+export const fetchBook = ({
+	id,
+}) => (dispatch) => {
 	dispatch(requestBook());
 	return getBook({
-		dispatch,
+		id,
 	}).then(book => dispatch(receiveBook(book)))
 		.catch(() => dispatch(errorReceiveBook()));
 };

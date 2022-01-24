@@ -26,12 +26,14 @@ class App extends React.Component {
 				<BrowserRouter>
 					<Header/>
 					<Switch>
-						<Route path={`/${PAGES.HOME}`}>
-							<HomePage/>
-						</Route>
-						<Route path={`/${PAGES.EDITOR}`}>
-							<EditorPage/>
-						</Route>
+						<Route
+							component={HomePage}
+							path={`/${PAGES.HOME}`}
+						/>
+						<Route
+							component={EditorPage}
+							path={`/${PAGES.EDITOR}/:bookId`}
+						/>
 						<Redirect from="*" to={`/${PAGES.HOME}`}/>
 					</Switch>
 				</BrowserRouter>

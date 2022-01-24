@@ -21,9 +21,7 @@ export default (state = initialState, action) => {
 		}
 
 		case RECEIVE_BOOKS: {
-			const {
-				list,
-			} = action.payload;
+			const list = action.payload;
 
 			return {
 				...state,

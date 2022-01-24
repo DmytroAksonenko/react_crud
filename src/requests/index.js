@@ -4,6 +4,7 @@ const getHeaders = () => ({
 });
 
 const fetchGet = ({ params = {}, url }) => {
+    console.log('WTF', url);
     url = new URL(url);
     url.search = new URLSearchParams(params).toString();
     return fetch(
@@ -30,9 +31,9 @@ const fetchPost = ({ body, params = {}, url }) => {
 };
 
 export const getJson = ({
-                            params,
-                            url,
-                        }) => {
+  params,
+  url,
+}) => {
     return fetchGet({
         params,
         url,

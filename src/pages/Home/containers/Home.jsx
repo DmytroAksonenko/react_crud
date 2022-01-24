@@ -21,6 +21,16 @@ class Home extends React.Component {
 		};
 	}
 
+
+	// 	).then((response) => {
+	// 		console.log(response);
+	// 		if (response.ok) {
+	// 			response.json()
+	// 				.then(res => { this.getFetchResult(res) })
+	// 		}
+	// 	});
+	// }
+
 	componentDidMount() {
 		this.props.actionFetchBooks();
 	}
@@ -42,6 +52,7 @@ class Home extends React.Component {
 							onMouseEnter={(event) => this.setState({
 								bookPopperAnchor: event.currentTarget,
 								bookPopperItem: item,
+								bookId: item.id,
 								isMouseOverPopper: true,
 							})}
 							onMouseLeave={() => {
@@ -53,6 +64,7 @@ class Home extends React.Component {
 										this.setState({
 											bookPopperAnchor: null,
 											bookPopperItem: null,
+											bookId: null,
 											isMouseOverPopper: false,
 										});
 									}
@@ -98,8 +110,7 @@ class Home extends React.Component {
 								<ListItem>
 									<Link
 										to={{
-											pathname: "/editor",
-											search: "?bookId=23434",
+											pathname: `/editor/${this.state.bookId}`,
 										}}
 									>
 										UPDATE

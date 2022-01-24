@@ -13,8 +13,8 @@ const store = createStore(
   applyMiddleware(thunkMiddleware),
 );
 
-export default() => (
+export default (props) => (
   <Provider store={store}>
-    <Editor/>
+    <Editor {...props} />
   </Provider>
 );

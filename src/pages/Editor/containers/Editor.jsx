@@ -5,18 +5,19 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import importedBookActions from "../../Editor/actions/book";
 import Box from '@material-ui/core/Box';
+// import Params from '../../../componentsNext/Hook/Params';
 
-function getQueryVariable(variable) {
-	var query = window.location.search.substring(1);
-	var vars = query.split("&");
-	for (var i = 0; i < vars.length; i++) {
-		var pair = vars[i].split("=");
-		if (pair[0] == variable) {
-			return pair[1];
-		}
-	}
-	return (false);
-}
+// function getQueryVariable(variable) {
+// 	var query = window.location.search.substring(1);
+// 	var vars = query.split("&");
+// 	for (var i = 0; i < vars.length; i++) {
+// 		var pair = vars[i].split("=");
+// 		if (pair[0] == variable) {
+// 			return pair[1];
+// 		}
+// 	}
+// 	return (false);
+// }
 
 class Editor extends React.Component {
 	constructor(props) {
@@ -24,14 +25,27 @@ class Editor extends React.Component {
 	}
 
 	componentDidMount() {
-		this.props.actionFetchBook();
+		this.props.actionFetchBook({
+			id: this.props.match.params.bookId,
+		});
+		// const searchToObject = (search) => {
+		// 	const params = new URLSearchParams(search);
+		// 	let result = {};
+		// 	for(let param of params) { // each 'entry' is a [key, value] tupple
+		// 		const [key, value] = param;
+		// 		result[key] = value;
+		// 	}
+		// 	return result;
+		// };
 		console.log(this.props);
-		console.log('query req: ' + getQueryVariable('bookId'));
+		// console.log('searchQuery: ', searchToObject(this.props.location.search));
+		// console.log('query req: ' + getQueryVariable('book'));
 	}
 
 	render() {
 		return (
 			<div style={{display: 'flex', justifyContent: 'start', width: '100%', paddingTop: '100px'}}>
+				{/*<Params />*/}
 				<div>
 					<Box sx={{border: 1, p: 1, background: 'white', width: '220px'}}>
 						<div>
@@ -65,6 +79,7 @@ class Editor extends React.Component {
 }
 
 const mapReduxStateToProps = state => ({
+	id: state.reducer.id,
 	name: state.reducer.name,
 	author: state.reducer.author,
 	genre: state.reducer.genre,
