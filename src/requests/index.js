@@ -4,7 +4,6 @@ const getHeaders = () => ({
 });
 
 const fetchGet = ({ params = {}, url }) => {
-    console.log('WTF', url);
     url = new URL(url);
     url.search = new URLSearchParams(params).toString();
     return fetch(

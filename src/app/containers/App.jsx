@@ -14,11 +14,6 @@ import EditorPage from 'pageProviders/Editor';
 import * as PAGES from 'constants/pages';
 
 class App extends React.Component {
-	componentDidMount() {
-		// this.props.actionFetchBook();
-	}
-
-
 	render() {
 		// console.log(this.props);
 		return (

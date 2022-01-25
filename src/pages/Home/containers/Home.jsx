@@ -21,23 +21,13 @@ class Home extends React.Component {
 		};
 	}
 
-
-	// 	).then((response) => {
-	// 		console.log(response);
-	// 		if (response.ok) {
-	// 			response.json()
-	// 				.then(res => { this.getFetchResult(res) })
-	// 		}
-	// 	});
-	// }
-
 	componentDidMount() {
 		this.props.actionFetchBooks();
 	}
 
 	render() {
-		console.log(this.state);
-		console.log(this.state.bookPopperItem);
+		// console.log(this.state);
+		// console.log(this.state.bookPopperItem);
 		return (
 
 			<div>

@@ -5,96 +5,230 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import importedBookActions from "../../Editor/actions/book";
 import Box from '@material-ui/core/Box';
-// import Params from '../../../componentsNext/Hook/Params';
-
-// function getQueryVariable(variable) {
-// 	var query = window.location.search.substring(1);
-// 	var vars = query.split("&");
-// 	for (var i = 0; i < vars.length; i++) {
-// 		var pair = vars[i].split("=");
-// 		if (pair[0] == variable) {
-// 			return pair[1];
-// 		}
-// 	}
-// 	return (false);
-// }
+import RestoreIcon from '../../../components/Icon/Restore';
 
 class Editor extends React.Component {
-	constructor(props) {
-		super(props);
-	}
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      // id: '',
+      // name: '',
+      // author: '',
+      // genre: '',
+      // price: '',
+      inputName: '',
+      inputAuthor: '',
+      inputGenre: '',
+      inputPrice: '',
+    }
+  }
 
-	componentDidMount() {
-		this.props.actionFetchBook({
-			id: this.props.match.params.bookId,
-		});
-		// const searchToObject = (search) => {
-		// 	const params = new URLSearchParams(search);
-		// 	let result = {};
-		// 	for(let param of params) { // each 'entry' is a [key, value] tupple
-		// 		const [key, value] = param;
-		// 		result[key] = value;
-		// 	}
-		// 	return result;
-		// };
-		console.log(this.props);
-		// console.log('searchQuery: ', searchToObject(this.props.location.search));
-		// console.log('query req: ' + getQueryVariable('book'));
-	}
+  handleChange(e) {
+    this.setState({
+      inputName: e.target.value,
+      inputAuthor: e.target.value,
+      inputGenre: e.target.value,
+      inputPrice: e.target.value,
+    });
+  }
 
-	render() {
-		return (
-			<div style={{display: 'flex', justifyContent: 'start', width: '100%', paddingTop: '100px'}}>
-				{/*<Params />*/}
-				<div>
-					<Box sx={{border: 1, p: 1, background: 'white', width: '220px'}}>
-						<div>
-							<div>
-								<Input defaultValue={"Name: " + this.props.name}/>
-							</div>
-							<div>
-								<Input defaultValue={"Author: " + this.props.author}/>
-							</div>
-							<div>
-								<Input defaultValue={"Genre: " + this.props.genre}/>
-							</div>
-							<div>
-								<Input defaultValue={"Price: " + this.props.price}/>
-							</div>
-						</div>
+  cancelChanges(changes, oldValue) {
+    let first = changes;
+    let second = oldValue;
+    this.setState({
+      inputName: oldValue
+    })
+  }
 
-					</Box>
-					<div>
-						<Button
-							variant="outlined"
-							style={{width: '300px', color: 'black', fontStyle: 'italic', borderColor: 'black'}}
-						>
-							UPDATE
-						</Button>
-					</div>
-				</div>
-			</div>
-		);
-	}
+  saveBook() {
+    this.props.actionFetchSaveBook({
+      id: this.state.id,
+      name: this.state.name,
+      author: this.state.author,
+      genre: this.state.genre,
+      price: this.state.price,
+    });
+    console.log(this.props);
+  }
+
+  componentDidMount() {
+    this.props.actionFetchBook({
+      id: this.props.match.params.bookId,
+    });
+    this.setState({
+      id: this.props.match.params.bookId,
+      name: this.props.name,
+      author: this.props.author,
+      genre: this.props.genre,
+      price: this.props.price,
+      inputName: this.props.name,
+      inputAuthor: this.props.author,
+      inputGenre: this.props.genre,
+      inputPrice: this.props.price,
+    });
+    console.log("did mount" + this.props);
+    console.log('search: ' + this.props.match.params.bookId);
+  }
+
+  setBook = (book) => {
+    this.setState({
+      id: book.id,
+      name: book.name,
+      // TODO other fields
+    });
+  };
+
+  componentDidUpdate(prevProps) {
+    if (this.props.book !== prevProps.book) {
+      this.setBook(this.props.book);
+    }
+  }
+
+  render() {
+    console.log("render: ", this.props);
+    console.log("inputName: ", this.state.inputName);
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'start',
+        width: '100%',
+        paddingTop: '100px'
+      }}>
+        <div>
+          <Box sx={{border: 1, p: 1, background: 'white', width: '220px'}}>
+            <div>
+              {/*{Object.keys(this.props.book)*/}
+                {/*.map((fieldName) => (*/}
+                  {/*<div>*/}
+                    {/*<div style={{*/}
+                      {/*fontStyle: 'italic', fontWeight: 700, background: '#008080',*/}
+                      {/*width: '290px'*/}
+                    {/*}}*/}
+                    {/*>*/}
+                      {/*{`${fieldName}:`}*/}
+                    {/*</div>*/}
+                    {/*<Input*/}
+                      {/*value={this.state[fieldName]}*/}
+                      {/*onChange={({ target }) => this.setState({*/}
+                        {/*[fieldName]: target.value,*/}
+                      {/*})}*/}
+                    {/*/>*/}
+                  {/*</div>*/}
+                {/*))*/}
+              {/*}*/}
+              <div>
+                <div style={{
+                  fontStyle: 'italic', fontWeight: 700, background: '#008080',
+                  width: '290px'
+                }}
+                >
+                  Name:
+                </div>
+                  <Input
+                    value={this.state.inputName}
+                    onChange={this.handleChange}
+                  />
+              </div>
+              <div>
+                <div style={{
+                  fontStyle: 'italic', fontWeight: 700, background: '#008080',
+                  width: '290px'
+                }}
+                >
+                  Author:
+                </div>
+                <Input
+                  value={this.state.inputAuthor}
+                  onChange={this.handleChange}
+                />
+              </div>
+              <div>
+                <div style={{
+                  fontStyle: 'italic', fontWeight: 700, background: '#008080',
+                  width: '290px'
+                }}
+                >
+                  Genre:
+                </div>
+                <Input value={this.state.inputGenre} onChange={this.handleChange}/>
+              </div>
+              <div>
+                <div style={{
+                  fontStyle: 'italic', fontWeight: 700, background: '#008080',
+                  width: '290px'
+                }}
+                >
+                  Price:
+                </div>
+                <Input value={this.state.inputPrice} onChange={this.handleChange}/>
+              </div>
+            </div>
+
+          </Box>
+          <div>
+            <Button
+              onClick={() =>
+                this.saveBook()
+              }
+              variant="outlined"
+              style={{
+                width: '300px',
+                color: 'black',
+                fontStyle: 'italic',
+                borderColor: 'black'
+              }}
+            >
+              UPDATE
+            </Button>
+          </div>
+        </div>
+        <div>
+          <div style={{height: '15px'}}></div>
+          <Button
+            onClick={() => {
+              // this.cancelChanges(this.state.inputName, this.state.name);
+            }}
+            endIcon={<RestoreIcon color="black" size={30}/>}
+            style={{
+              color: 'black',
+              borderColor: 'black',
+              height: '50px'
+            }}
+            variant="outlined"
+          />
+        </div>
+      </div>
+    );
+
+  }
+
 }
 
 const mapReduxStateToProps = state => ({
-	id: state.reducer.id,
-	name: state.reducer.name,
-	author: state.reducer.author,
-	genre: state.reducer.genre,
-	price: state.reducer.price,
-	isFailedFetchBook: state.reducer.isFailedFetchBook,
-	isFetchingBook: state.reducer.isFetchingBook,
+  book: state.reducer.book,
+  // isFailedFetchBook: state.reducer.isFailedFetchBook,
+  // isFetchingBook: state.reducer.isFetchingBook,
 });
 
+// const mapReduxStateToProps = state => ({
+//   id: state.reducer.id,
+//   name: state.reducer.name,
+//   author: state.reducer.author,
+//   genre: state.reducer.genre,
+//   price: state.reducer.price,
+//   // isFailedFetchBook: state.reducer.isFailedFetchBook,
+//   // isFetchingBook: state.reducer.isFetchingBook,
+// });
+
 const mapDispatchToProps = (dispatch) => {
-	const {
-		fetchBook,
-	} = bindActionCreators(importedBookActions, dispatch);
-	return {
-		actionFetchBook: fetchBook,
-	};
+  const {
+    fetchBook, fetchSaveBook,
+  } = bindActionCreators(importedBookActions, dispatch);
+  return {
+    actionFetchBook: fetchBook,
+    actionFetchSaveBook: fetchSaveBook,
+  };
 };
 
 export default connect(mapReduxStateToProps, mapDispatchToProps)(Editor);

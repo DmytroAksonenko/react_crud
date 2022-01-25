@@ -2,15 +2,19 @@ import React from "react";
 import Input from '@mui/material/Input';
 
 const NewInput = ({
-	defaultValue,
+  value,
+  inputProps,
+  onChange,
 }) => {
 
-	return (
-		<Input
-			defaultValue={defaultValue}
-			style={{width: '290px'}}
-		/>
-	)
+  return (
+    <Input
+      value={value}
+      inputProps={inputProps}
+      onChange={onChange}
+      style={{width: '290px'}}
+    />
+  )
 };
 
 
