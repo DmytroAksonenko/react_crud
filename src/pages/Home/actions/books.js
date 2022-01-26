@@ -1,6 +1,7 @@
 import {
 	getJson,
 	postJson,
+	deleteJson,
 } from 'requests';
 
 import config from 'config';
@@ -9,6 +10,8 @@ import {
 	ERROR_RECEIVE_BOOKS,
 	RECEIVE_BOOKS,
 	REQUEST_BOOKS,
+	ERROR_DELETE_BOOK,
+	REQUEST_DELETE_BOOK,
 } from '../constants/actionTypes';
 
 const errorReceiveBooks = () => ({
@@ -23,37 +26,7 @@ const getBooks = () => {
 
 	return getJson({
 		url: `${BASE_URL}${BOOKS_SERVICE}/getAll`,
-	}).catch(() => {
-		const storage = {
-			books: [
-				{
-					name: 'cool book',
-					author: 'author1',
-					genre: 'genre1',
-					price: 50,
-				},
-				{
-					name: 'Best book',
-					author: 'author2',
-					genre: 'genre1',
-					price: 53,
-				},
-				{
-					name: 'book3',
-					author: 'author3',
-					genre: 'genre2',
-					price: 73,
-				},
-				{
-					name: 'I Book',
-					author: 'author4',
-					genre: 'genre3',
-					price: 23,
-				},
-			],
-		};
-		return storage;
-	});
+	})
 };
 
 const receiveBooks = (books) => ({
@@ -73,6 +46,41 @@ export const fetchBooks = () => (dispatch) => {
 		.catch(() => dispatch(errorReceiveBooks()));
 };
 
+const errorDeleteBook = () => ({
+	type: ERROR_DELETE_BOOK,
+});
+
+const deleteBook = ({
+										id,
+									}) => {
+	const {
+		BASE_URL,
+		BOOKS_SERVICE,
+	} = config;
+
+	return deleteJson({
+		params: {
+			id,
+		},
+		url: `${BASE_URL}${BOOKS_SERVICE}/delete`,
+	})
+};
+
+const requestDeleteBook = () => ({
+	type: REQUEST_DELETE_BOOK,
+});
+
+export const fetchDeleteBook = ({
+																id,
+															}) => (dispatch) => {
+	dispatch(requestDeleteBook());
+	return deleteBook({
+		id,
+	}).then(() => fetchBooks())
+		.catch(() => dispatch(errorDeleteBook()));
+};
+
 export default {
 	fetchBooks,
+	fetchDeleteBook,
 };

@@ -8,11 +8,6 @@ import {
 } from '../constants/actionTypes';
 
 const initialState = {
-	// id: null,
-	// name: '',
-	// author: '',
-	// genre: '',
-	// price: '',
 	book: null,
 	isFailedFetchBook: false,
 	isFetchingBook: false,
@@ -85,11 +80,18 @@ export default (state = initialState, action) => {
 
 			return {
 				...state,
-				id: id || initialState.id,
-				name: name || initialState.name,
-				author: author || initialState.author,
-				genre: genre || initialState.genre,
-				price: price || initialState.price,
+				book: {
+					id,
+					name,
+					author,
+					genre,
+					price,
+				},
+				// id: id || initialState.id,
+				// name: name || initialState.name,
+				// author: author || initialState.author,
+				// genre: genre || initialState.genre,
+				// price: price || initialState.price,
 				isFailedFetchSaveBook: false,
 				isFetchingSaveBook: false,
 			};

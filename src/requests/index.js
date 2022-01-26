@@ -29,6 +29,19 @@ const fetchPost = ({ body, params = {}, url }) => {
     );
 };
 
+const fetchDelete = ({ params = {}, url }) => {
+  url = new URL(url);
+  url.search = new URLSearchParams(params).toString();
+
+  return fetch(
+    url,
+    {
+      headers: getHeaders(),
+      method: 'DELETE',
+    }
+  );
+};
+
 export const getJson = ({
   params,
   url,
@@ -59,4 +72,19 @@ export const postJson = ({
         }
         throw response;
     });
+};
+
+export const deleteJson = ({
+                           params,
+                           url,
+                         }) => {
+  return fetchDelete({
+    params,
+    url,
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    }
+    throw response;
+  });
 };

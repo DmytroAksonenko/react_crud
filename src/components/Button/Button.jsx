@@ -10,8 +10,7 @@ export const NewBookButton = () => {
 			endIcon={<AddCircleIcon color="black" size={24}/>}
 		>
 			<Link to={{
-				pathname: "/editor",
-				search: "?bookId=null",
+				pathname: `/editor/?bookId=null`,
 			}}>
 				ADD NEW
 			</Link>

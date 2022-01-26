@@ -2,12 +2,17 @@ import {
 	ERROR_RECEIVE_BOOKS,
 	RECEIVE_BOOKS,
 	REQUEST_BOOKS,
+	ERROR_DELETE_BOOK,
+	REQUEST_DELETE_BOOK,
 } from '../constants/actionTypes';
 
 const initialState = {
+	id: null,
 	list: [],
 	isFailedFetchBooks: false,
 	isFetchingBooks: false,
+	isFailedFetchDeleteBooks: false,
+	isFetchingDeleteBook: false,
 };
 
 export default (state = initialState, action) => {
@@ -36,6 +41,22 @@ export default (state = initialState, action) => {
 				...state,
 				isFailedFetchBooks: false,
 				isFetchingBooks: true,
+			};
+		}
+
+		case ERROR_DELETE_BOOK: {
+			return {
+				...state,
+				isFailedFetchDeleteBooks: true,
+				isFetchingDeleteBook: false,
+			};
+		}
+
+		case REQUEST_DELETE_BOOK: {
+			return {
+				...state,
+				isFailedFetchDeleteBook: false,
+				isFetchingDeleteBook: true,
 			};
 		}
 

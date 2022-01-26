@@ -6,66 +6,81 @@ import {connect} from "react-redux";
 import importedBookActions from "../../Editor/actions/book";
 import Box from '@material-ui/core/Box';
 import RestoreIcon from '../../../components/Icon/Restore';
+import {Link} from "react-router-dom";
 
 class Editor extends React.Component {
   constructor(props) {
     super(props);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleAuthorChange = this.handleAuthorChange.bind(this);
+    this.handleGenreChange = this.handleGenreChange.bind(this);
+    this.handlePriceChange = this.handlePriceChange.bind(this);
     this.state = {
-      // id: '',
-      // name: '',
-      // author: '',
-      // genre: '',
-      // price: '',
-      inputName: '',
-      inputAuthor: '',
-      inputGenre: '',
-      inputPrice: '',
+      book: {
+        id: '',
+        name: '',
+        author: '',
+        genre: '',
+        price: '',
+      }
     }
   }
 
-  handleChange(e) {
-    this.setState({
-      inputName: e.target.value,
-      inputAuthor: e.target.value,
-      inputGenre: e.target.value,
-      inputPrice: e.target.value,
-    });
+  handleNameChange(e) {
+    this.setState(prevState => ({
+      book: {
+        ...prevState.book,
+        name: e.target.value,
+      }
+    }));
   }
 
-  cancelChanges(changes, oldValue) {
-    let first = changes;
-    let second = oldValue;
-    this.setState({
-      inputName: oldValue
-    })
+  handleAuthorChange(e) {
+    this.setState(prevState => ({
+      book: {
+        ...prevState.book,
+        author: e.target.value,
+      }
+    }));
+  }
+
+  handleGenreChange(e) {
+    this.setState(prevState => ({
+      book: {
+        ...prevState.book,
+        genre: e.target.value,
+      }
+    }));
+  }
+
+  handlePriceChange(e) {
+    this.setState(prevState => ({
+      book: {
+        ...prevState.book,
+        price: e.target.value,
+      }
+    }));
   }
 
   saveBook() {
+    console.log(this.state.book);
     this.props.actionFetchSaveBook({
-      id: this.state.id,
-      name: this.state.name,
-      author: this.state.author,
-      genre: this.state.genre,
-      price: this.state.price,
+      book: this.state.book
+      // book: 'test'
+
+
+      // id: this.state.id,
+      // name: this.state.name,
+      // author: this.state.author,
+      // genre: this.state.genre,
+      // price: this.state.price,
     });
-    console.log(this.props);
+    // console.log(this.props);
   }
 
   componentDidMount() {
     this.props.actionFetchBook({
       id: this.props.match.params.bookId,
-    });
-    this.setState({
-      id: this.props.match.params.bookId,
-      name: this.props.name,
-      author: this.props.author,
-      genre: this.props.genre,
-      price: this.props.price,
-      inputName: this.props.name,
-      inputAuthor: this.props.author,
-      inputGenre: this.props.genre,
-      inputPrice: this.props.price,
     });
     console.log("did mount" + this.props);
     console.log('search: ' + this.props.match.params.bookId);
@@ -73,9 +88,12 @@ class Editor extends React.Component {
 
   setBook = (book) => {
     this.setState({
-      id: book.id,
-      name: book.name,
-      // TODO other fields
+      book: book,
+      // id: book.id,
+      // name: book.name,
+      // author: book.author,
+      // genre: book.genre,
+      // price: book.price,
     });
   };
 
@@ -86,140 +104,247 @@ class Editor extends React.Component {
   }
 
   render() {
-    console.log("render: ", this.props);
-    console.log("inputName: ", this.state.inputName);
+    // console.log("render: ", this.props);
+    // console.log("name: ", this.state.name);
+    console.log("bookId: ", this.props.match.params.bookId);
+    let button;
+    if (!!this.state.book.id) {
+      button = <Button
+        onClick={() =>
+          this.saveBook()
+        }
+        variant="outlined"
+        style={{
+          width: '180px',
+          color: 'black',
+          fontStyle: 'italic',
+          borderColor: 'black'
+        }}
+      >
+        UPDATE
+      </Button>
+    } else {
+      button = <Button
+        onClick={() =>
+          this.saveBook()
+        }
+        variant="outlined"
+        style={{
+          width: '180px',
+          color: 'black',
+          fontStyle: 'italic',
+          borderColor: 'black'
+        }}
+      >
+        <Link
+          to={{
+            pathname: `/home`,
+          }}
+        >
+          CREATE
+        </Link>
+      </Button>
+    }
     return (
-      <div style={{
-        display: 'flex',
-        justifyContent: 'start',
-        width: '100%',
-        paddingTop: '100px'
-      }}>
-        <div>
-          <Box sx={{border: 1, p: 1, background: 'white', width: '220px'}}>
-            <div>
-              {/*{Object.keys(this.props.book)*/}
-                {/*.map((fieldName) => (*/}
-                  {/*<div>*/}
-                    {/*<div style={{*/}
-                      {/*fontStyle: 'italic', fontWeight: 700, background: '#008080',*/}
-                      {/*width: '290px'*/}
-                    {/*}}*/}
-                    {/*>*/}
-                      {/*{`${fieldName}:`}*/}
-                    {/*</div>*/}
-                    {/*<Input*/}
-                      {/*value={this.state[fieldName]}*/}
-                      {/*onChange={({ target }) => this.setState({*/}
-                        {/*[fieldName]: target.value,*/}
-                      {/*})}*/}
-                    {/*/>*/}
-                  {/*</div>*/}
-                {/*))*/}
-              {/*}*/}
-              <div>
-                <div style={{
-                  fontStyle: 'italic', fontWeight: 700, background: '#008080',
-                  width: '290px'
-                }}
-                >
-                  Name:
-                </div>
-                  <Input
-                    value={this.state.inputName}
-                    onChange={this.handleChange}
-                  />
-              </div>
-              <div>
-                <div style={{
-                  fontStyle: 'italic', fontWeight: 700, background: '#008080',
-                  width: '290px'
-                }}
-                >
-                  Author:
-                </div>
-                <Input
-                  value={this.state.inputAuthor}
-                  onChange={this.handleChange}
-                />
-              </div>
-              <div>
-                <div style={{
-                  fontStyle: 'italic', fontWeight: 700, background: '#008080',
-                  width: '290px'
-                }}
-                >
-                  Genre:
-                </div>
-                <Input value={this.state.inputGenre} onChange={this.handleChange}/>
-              </div>
-              <div>
-                <div style={{
-                  fontStyle: 'italic', fontWeight: 700, background: '#008080',
-                  width: '290px'
-                }}
-                >
-                  Price:
-                </div>
-                <Input value={this.state.inputPrice} onChange={this.handleChange}/>
-              </div>
-            </div>
-
-          </Box>
+      <div>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'start',
+          width: '100%',
+          paddingTop: '100px'
+        }}>
           <div>
+            <Box sx={{border: 1, p: 1, background: 'white', width: '290px'}}>
+              <div>
+                {/*{Object.keys(this.props.book)*/}
+                {/*.map((fieldName) => (*/}
+                {/*<div>*/}
+                {/*<div style={{*/}
+                {/*fontStyle: 'italic', fontWeight: 700, background: '#008080',*/}
+                {/*width: '290px'*/}
+                {/*}}*/}
+                {/*>*/}
+                {/*{`${fieldName}:`}*/}
+                {/*</div>*/}
+                {/*<Input*/}
+                {/*value={this.state[fieldName]}*/}
+                {/*onChange={({ target }) => this.setState({*/}
+                {/*[fieldName]: target.value,*/}
+                {/*})}*/}
+                {/*/>*/}
+                {/*</div>*/}
+                {/*))*/}
+                {/*}*/}
+                <div>
+                  <div style={{
+                    fontStyle: 'italic', fontWeight: 700, background: '#008080',
+                    width: '290px'
+                  }}
+                  >
+                    Name:
+                  </div>
+                  <Input
+                    value={this.state.book.name}
+                    onChange={this.handleNameChange}
+                  />
+                </div>
+                <div>
+                  <div style={{
+                    fontStyle: 'italic', fontWeight: 700, background: '#008080',
+                    width: '290px'
+                  }}
+                  >
+                    Author:
+                  </div>
+                  <Input
+                    value={this.state.book.author}
+                    onChange={this.handleAuthorChange}
+                  />
+                </div>
+                <div>
+                  <div style={{
+                    fontStyle: 'italic', fontWeight: 700, background: '#008080',
+                    width: '290px'
+                  }}
+                  >
+                    Genre:
+                  </div>
+                  <Input value={this.state.book.genre}
+                         onChange={this.handleGenreChange}/>
+                </div>
+                <div>
+                  <div style={{
+                    fontStyle: 'italic', fontWeight: 700, background: '#008080',
+                    width: '290px'
+                  }}
+                  >
+                    Price:
+                  </div>
+                  <Input value={this.state.book.price}
+                         onChange={this.handlePriceChange}/>
+                </div>
+              </div>
+
+            </Box>
+            <div>
+
+            </div>
+          </div>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-around'
+          }}>
             <Button
-              onClick={() =>
-                this.saveBook()
-              }
-              variant="outlined"
-              style={{
-                width: '300px',
-                color: 'black',
-                fontStyle: 'italic',
-                borderColor: 'black'
+              onClick={() => {
+                this.setState(prevState => ({
+                  book: {
+                    ...prevState.book,
+                    name: this.props.book.name,
+                  }
+                }));
               }}
-            >
-              UPDATE
-            </Button>
+              endIcon={<RestoreIcon color="black" size={30}/>}
+              style={{
+                color: 'black',
+                borderColor: 'black',
+                height: '40px'
+              }}
+              variant="outlined"
+            />
+            <Button
+              onClick={() => {
+                this.setState(prevState => ({
+                  book: {
+                    ...prevState.book,
+                    author: this.props.book.author,
+                  }
+                }));
+              }}
+              endIcon={<RestoreIcon color="black" size={30}/>}
+              style={{
+                color: 'black',
+                borderColor: 'black',
+                height: '40px'
+              }}
+              variant="outlined"
+            />
+            <Button
+              onClick={() => {
+                this.setState(prevState => ({
+                  book: {
+                    ...prevState.book,
+                    genre: this.props.book.genre,
+                  }
+                }));
+              }}
+              endIcon={<RestoreIcon color="black" size={30}/>}
+              style={{
+                color: 'black',
+                borderColor: 'black',
+                height: '40px'
+              }}
+              variant="outlined"
+            />
+            <Button
+              onClick={() => {
+                this.setState(prevState => ({
+                  book: {
+                    ...prevState.book,
+                    price: this.props.book.price,
+                  }
+                }));
+              }}
+              endIcon={<RestoreIcon color="black" size={30}/>}
+              style={{
+                color: 'black',
+                borderColor: 'black',
+                height: '40px'
+              }}
+              variant="outlined"
+            />
+
           </div>
         </div>
-        <div>
-          <div style={{height: '15px'}}></div>
+        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+          {/*<Button*/}
+          {/*onClick={() =>*/}
+          {/*this.saveBook()*/}
+          {/*}*/}
+          {/*variant="outlined"*/}
+          {/*style={{*/}
+          {/*width: '180px',*/}
+          {/*color: 'black',*/}
+          {/*fontStyle: 'italic',*/}
+          {/*borderColor: 'black'*/}
+          {/*}}*/}
+          {/*>*/}
+          {/*UPDATE*/}
+          {/*</Button>*/}
+          {button}
           <Button
-            onClick={() => {
-              // this.cancelChanges(this.state.inputName, this.state.name);
-            }}
-            endIcon={<RestoreIcon color="black" size={30}/>}
-            style={{
-              color: 'black',
-              borderColor: 'black',
-              height: '50px'
-            }}
+            onClick={() =>
+              this.setBook(this.props.book)
+            }
             variant="outlined"
-          />
+            style={{
+              width: '180px',
+              color: 'black',
+              fontStyle: 'italic',
+              borderColor: 'black'
+            }}
+          >
+            CANCEL
+          </Button>
         </div>
       </div>
     );
-
   }
-
 }
 
 const mapReduxStateToProps = state => ({
   book: state.reducer.book,
-  // isFailedFetchBook: state.reducer.isFailedFetchBook,
-  // isFetchingBook: state.reducer.isFetchingBook,
 });
-
-// const mapReduxStateToProps = state => ({
-//   id: state.reducer.id,
-//   name: state.reducer.name,
-//   author: state.reducer.author,
-//   genre: state.reducer.genre,
-//   price: state.reducer.price,
-//   // isFailedFetchBook: state.reducer.isFailedFetchBook,
-//   // isFetchingBook: state.reducer.isFetchingBook,
-// });
 
 const mapDispatchToProps = (dispatch) => {
   const {
