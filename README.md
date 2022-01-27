@@ -9,6 +9,8 @@
        When you click on the "Delete" button on the backend, a request should be sent to delete an entity by its id (After successful deletion, the entity should disappear from the list of entities)
        When you click on the "Edit" or "Create" button, the edit/create entity page should open. If the "Edit" button was pressed, then the creation/editing page gets the entity id and loads the data from the backend by the id of this entity. All data that is loaded from the server must be added to the reducer. If the page has not received an id, this means that we are in entity creation mode.
        At the end of the page for creating/editing an entity, there should be 2 buttons "Cancel" and "Save". When you click on the "Cancel" button, the entity list page should open and reload your data. When you click on the "Save" button, a request should be sent to the backend, and in case of a successful response, a redirect to the entity list page should be triggered.`
+       
+* Backend: [sb_react_crud_backend](https://github.com/DmytroAksonenko/sb_react_crud_backend)
 
 #### `Screenshots`
 
