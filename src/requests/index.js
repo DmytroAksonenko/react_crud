@@ -1,35 +1,35 @@
 const getHeaders = () => ({
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
+  Accept: 'application/json',
+  'Content-Type': 'application/json',
 });
 
-const fetchGet = ({ params = {}, url }) => {
-    url = new URL(url);
-    url.search = new URLSearchParams(params).toString();
-    return fetch(
-        url,
-        {
-            headers: getHeaders(),
-            method: 'GET',
-        }
-    );
+const fetchGet = ({params = {}, url}) => {
+  url = new URL(url);
+  url.search = new URLSearchParams(params).toString();
+  return fetch(
+    url,
+    {
+      headers: getHeaders(),
+      method: 'GET',
+    }
+  );
 };
 
-const fetchPost = ({ body, params = {}, url }) => {
-    url = new URL(url);
-    url.search = new URLSearchParams(params).toString();
+const fetchPost = ({body, params = {}, url}) => {
+  url = new URL(url);
+  url.search = new URLSearchParams(params).toString();
 
-    return fetch(
-        url,
-        {
-            body: JSON.stringify(body),
-            headers: getHeaders(),
-            method: 'POST',
-        }
-    );
+  return fetch(
+    url,
+    {
+      body: JSON.stringify(body),
+      headers: getHeaders(),
+      method: 'POST',
+    }
+  );
 };
 
-const fetchDelete = ({ params = {}, url }) => {
+const fetchDelete = ({params = {}, url}) => {
   url = new URL(url);
   url.search = new URLSearchParams(params).toString();
 
@@ -43,41 +43,41 @@ const fetchDelete = ({ params = {}, url }) => {
 };
 
 export const getJson = ({
-  params,
-  url,
-}) => {
-    return fetchGet({
-        params,
-        url,
-    }).then((response) => {
-        if (response.ok) {
-            return response.json();
-        }
-        throw response;
-    });
+                          params,
+                          url,
+                        }) => {
+  return fetchGet({
+    params,
+    url,
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    }
+    throw response;
+  });
 };
 
 export const postJson = ({
-                             body,
-                             params,
-                             url,
-                         }) => {
-    return fetchPost({
-        body,
-        params,
-        url,
-    }).then((response) => {
-        if (response.ok) {
-            return response.json();
-        }
-        throw response;
-    });
-};
-
-export const deleteJson = ({
+                           body,
                            params,
                            url,
                          }) => {
+  return fetchPost({
+    body,
+    params,
+    url,
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    }
+    throw response;
+  });
+};
+
+export const deleteJson = ({
+                             params,
+                             url,
+                           }) => {
   return fetchDelete({
     params,
     url,

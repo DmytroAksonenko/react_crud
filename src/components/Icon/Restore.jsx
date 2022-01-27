@@ -2,7 +2,7 @@ import React from 'react';
 
 import SvgIcon from '@material-ui/core/SvgIcon';
 
-const Restore = ({ color, size }) => (
+const Restore = ({color, size}) => (
   <SvgIcon
     htmlColor={color}
     fill={color}

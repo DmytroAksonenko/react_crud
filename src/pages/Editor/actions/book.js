@@ -55,7 +55,7 @@ const errorReceiveResultSaveBook = () => ({
 });
 
 const saveBook = ({
-                    book,
+                    id, name, author, genre, price,
                   }) => {
   const {
     BASE_URL,
@@ -64,7 +64,7 @@ const saveBook = ({
 
   return postJson({
     body: {
-      book,
+      id, name, author, genre, price,
     },
     url: `${BASE_URL}${BOOKS_SERVICE}/save`,
   })
@@ -80,11 +80,11 @@ const requestSaveBook = () => ({
 });
 
 export const fetchSaveBook = ({
-                                book,
+                                id, name, author, genre, price,
                               }) => (dispatch) => {
   dispatch(requestSaveBook());
   return saveBook({
-    book,
+    id, name, author, genre, price,
   }).then(book => dispatch(receiveResultSaveBook(book)))
     .catch(() => dispatch(errorReceiveResultSaveBook()));
 };

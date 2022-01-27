@@ -2,10 +2,10 @@ import React from "react";
 import Input from '@mui/material/Input';
 
 const NewInput = ({
-  value,
-  inputProps,
-  onChange,
-}) => {
+                    value,
+                    inputProps,
+                    onChange,
+                  }) => {
 
   return (
     <Input
@@ -16,6 +16,5 @@ const NewInput = ({
     />
   )
 };
-
 
 export default NewInput;

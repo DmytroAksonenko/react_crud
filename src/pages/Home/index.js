@@ -6,15 +6,16 @@ import Home from './containers/Home';
 import reducer from './reducers/reducer';
 
 const rootReducer = combineReducers({
-    reducer,
+  reducer,
 });
+
 const store = createStore(
-    rootReducer,
-    applyMiddleware(thunkMiddleware),
+  rootReducer,
+  applyMiddleware(thunkMiddleware),
 );
 
-export default() => (
-    <Provider store={store}>
-        <Home/>
-    </Provider>
+export default () => (
+  <Provider store={store}>
+    <Home/>
+  </Provider>
 );

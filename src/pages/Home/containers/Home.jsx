@@ -1,14 +1,13 @@
 import React from "react";
-import {Button} from '@mui/material';
+import { Button } from '@mui/material';
 import NewBookButton from 'components/Button';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import Popper from '@material-ui/core/Popper';
 import Box from '@material-ui/core/Box';
-import {Link} from "react-router-dom";
-import {bindActionCreators} from "redux";
+import { Link } from "react-router-dom";
+import { bindActionCreators } from "redux";
 import importedBooksActions from "../actions/books";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 class Home extends React.Component {
   constructor(props) {
@@ -25,15 +24,23 @@ class Home extends React.Component {
     this.props.actionFetchBooks();
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.list !== prevProps.list) {
+      this.props.actionFetchBooks();
+    }
+  }
+
   render() {
     return (
       <div>
         <div>
           <NewBookButton/>
         </div>
-        <div style={{
-          display: 'flex',
-        }}>
+        <div
+          style={{
+            display: 'flex',
+          }}
+        >
           {this.props.list.map((item) => (
             <div
               onMouseEnter={(event) => this.setState({
@@ -62,13 +69,17 @@ class Home extends React.Component {
               <Button variant="outlined">
                 <div>
                   <div>
-                    <ol style={{
-                      color: 'black',
-                      fontStyle: 'italic',
-                      background: '#008080',
-                      textAlign: 'center',
-                      alignItems: 'center'
-                    }}>{item.name}</ol>
+                    <ol
+                      style={{
+                        color: 'black',
+                        fontStyle: 'italic',
+                        background: '#008080',
+                        textAlign: 'center',
+                        alignItems: 'center'
+                      }}
+                    >
+                      {item.name}
+                    </ol>
                   </div>
                   <div>
                     {'Author: ' + item.author}
@@ -95,18 +106,35 @@ class Home extends React.Component {
               bookPopperItem: null,
             })}
           >
-            <Box sx={{border: 1, p: 1, bgcolor: '#008080'}}>
-              <List>
-                <ListItem>
+            <Box
+              sx={{
+                border: 1,
+                p: 1,
+                bgcolor: '#008080'
+              }}
+            >
+              <List
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}
+              >
+                <Button
+                  style={{
+                    color: 'black',
+                    fontStyle: 'italic'
+                  }}
+                  variant="outlined"
+                >
                   <Link
                     to={{
                       pathname: `/editor/${this.state.bookId}`,
                     }}
                   >
-                    UPDATE
+                    EDIT
                   </Link>
-                </ListItem>
-                <ListItem
+                </Button>
+                <Button
                   onClick={() => {
                     this.props.actionFetchDeleteBook({
                       id: this.state.bookId,
@@ -116,14 +144,19 @@ class Home extends React.Component {
                       bookPopperItem: null,
                     });
                   }
+
                   }
+                  style={{
+                    color: 'red',
+                    fontStyle: 'italic'
+                  }}
+                  variant="outlined"
                 >
                   DELETE
-                </ListItem>
+                </Button>
               </List>
             </Box>
           </Popper>
-
         </div>
       </div>
     );

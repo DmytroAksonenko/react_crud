@@ -1,12 +1,12 @@
 import React from "react";
 import Input from '../../../components/Input';
 import Button from "@material-ui/core/Button";
-import {bindActionCreators} from "redux";
-import {connect} from "react-redux";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import importedBookActions from "../../Editor/actions/book";
 import Box from '@material-ui/core/Box';
 import RestoreIcon from '../../../components/Icon/Restore';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Editor extends React.Component {
   constructor(props) {
@@ -65,35 +65,23 @@ class Editor extends React.Component {
   saveBook() {
     console.log(this.state.book);
     this.props.actionFetchSaveBook({
-      book: this.state.book
-      // book: 'test'
-
-
-      // id: this.state.id,
-      // name: this.state.name,
-      // author: this.state.author,
-      // genre: this.state.genre,
-      // price: this.state.price,
+      id: this.state.book.id,
+      name: this.state.book.name,
+      author: this.state.book.author,
+      genre: this.state.book.genre,
+      price: this.state.book.price,
     });
-    // console.log(this.props);
   }
 
   componentDidMount() {
     this.props.actionFetchBook({
       id: this.props.match.params.bookId,
     });
-    console.log("did mount" + this.props);
-    console.log('search: ' + this.props.match.params.bookId);
   }
 
   setBook = (book) => {
     this.setState({
       book: book,
-      // id: book.id,
-      // name: book.name,
-      // author: book.author,
-      // genre: book.genre,
-      // price: book.price,
     });
   };
 
@@ -101,12 +89,21 @@ class Editor extends React.Component {
     if (this.props.book !== prevProps.book) {
       this.setBook(this.props.book);
     }
+
+    const {
+      isFetchingSaveBook,
+      isFailedFetchSaveBook,
+    } = this.props;
+    if (
+      isFetchingSaveBook !== true &&
+      isFetchingSaveBook !== prevProps.isFetchingSaveBook &&
+      isFailedFetchSaveBook !== true
+    ) {
+      this.props.history.push('/home')
+    }
   }
 
   render() {
-    // console.log("render: ", this.props);
-    // console.log("name: ", this.state.name);
-    console.log("bookId: ", this.props.match.params.bookId);
     let button;
     if (!!this.state.book.id) {
       button = <Button
@@ -115,10 +112,10 @@ class Editor extends React.Component {
         }
         variant="outlined"
         style={{
-          width: '180px',
+          width: '120px',
           color: 'black',
           fontStyle: 'italic',
-          borderColor: 'black'
+          borderColor: 'black',
         }}
       >
         UPDATE
@@ -130,19 +127,13 @@ class Editor extends React.Component {
         }
         variant="outlined"
         style={{
-          width: '180px',
+          width: '120px',
           color: 'black',
           fontStyle: 'italic',
           borderColor: 'black'
         }}
       >
-        <Link
-          to={{
-            pathname: `/home`,
-          }}
-        >
-          CREATE
-        </Link>
+        CREATE
       </Button>
     }
     return (
@@ -154,32 +145,22 @@ class Editor extends React.Component {
           paddingTop: '100px'
         }}>
           <div>
-            <Box sx={{border: 1, p: 1, background: 'white', width: '290px'}}>
+            <Box
+              sx={{
+                border: 1,
+                p: 1,
+                background: 'white',
+                width: '290px'
+              }}>
               <div>
-                {/*{Object.keys(this.props.book)*/}
-                {/*.map((fieldName) => (*/}
-                {/*<div>*/}
-                {/*<div style={{*/}
-                {/*fontStyle: 'italic', fontWeight: 700, background: '#008080',*/}
-                {/*width: '290px'*/}
-                {/*}}*/}
-                {/*>*/}
-                {/*{`${fieldName}:`}*/}
-                {/*</div>*/}
-                {/*<Input*/}
-                {/*value={this.state[fieldName]}*/}
-                {/*onChange={({ target }) => this.setState({*/}
-                {/*[fieldName]: target.value,*/}
-                {/*})}*/}
-                {/*/>*/}
-                {/*</div>*/}
-                {/*))*/}
-                {/*}*/}
                 <div>
-                  <div style={{
-                    fontStyle: 'italic', fontWeight: 700, background: '#008080',
-                    width: '290px'
-                  }}
+                  <div
+                    style={{
+                      fontStyle: 'italic',
+                      fontWeight: 700,
+                      background: '#008080',
+                      width: '290px'
+                    }}
                   >
                     Name:
                   </div>
@@ -189,10 +170,13 @@ class Editor extends React.Component {
                   />
                 </div>
                 <div>
-                  <div style={{
-                    fontStyle: 'italic', fontWeight: 700, background: '#008080',
-                    width: '290px'
-                  }}
+                  <div
+                    style={{
+                      fontStyle: 'italic',
+                      fontWeight: 700,
+                      background: '#008080',
+                      width: '290px'
+                    }}
                   >
                     Author:
                   </div>
@@ -202,39 +186,47 @@ class Editor extends React.Component {
                   />
                 </div>
                 <div>
-                  <div style={{
-                    fontStyle: 'italic', fontWeight: 700, background: '#008080',
-                    width: '290px'
-                  }}
+                  <div
+                    style={{
+                      fontStyle: 'italic',
+                      fontWeight: 700,
+                      background: '#008080',
+                      width: '290px'
+                    }}
                   >
                     Genre:
                   </div>
-                  <Input value={this.state.book.genre}
-                         onChange={this.handleGenreChange}/>
+                  <Input
+                    value={this.state.book.genre}
+                    onChange={this.handleGenreChange}
+                  />
                 </div>
                 <div>
-                  <div style={{
-                    fontStyle: 'italic', fontWeight: 700, background: '#008080',
-                    width: '290px'
-                  }}
+                  <div
+                    style={{
+                      fontStyle: 'italic',
+                      fontWeight: 700,
+                      background: '#008080',
+                      width: '290px'
+                    }}
                   >
                     Price:
                   </div>
-                  <Input value={this.state.book.price}
-                         onChange={this.handlePriceChange}/>
+                  <Input
+                    value={this.state.book.price}
+                    onChange={this.handlePriceChange}
+                  />
                 </div>
               </div>
-
             </Box>
-            <div>
-
-            </div>
           </div>
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-around'
-          }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-around'
+            }}
+          >
             <Button
               onClick={() => {
                 this.setState(prevState => ({
@@ -244,7 +236,8 @@ class Editor extends React.Component {
                   }
                 }));
               }}
-              endIcon={<RestoreIcon color="black" size={30}/>}
+              endIcon={
+                <RestoreIcon color="black" size={30}/>}
               style={{
                 color: 'black',
                 borderColor: 'black',
@@ -303,24 +296,31 @@ class Editor extends React.Component {
               }}
               variant="outlined"
             />
-
           </div>
         </div>
-        <div style={{display: 'flex', justifyContent: 'space-between'}}>
-          {/*<Button*/}
-          {/*onClick={() =>*/}
-          {/*this.saveBook()*/}
-          {/*}*/}
-          {/*variant="outlined"*/}
-          {/*style={{*/}
-          {/*width: '180px',*/}
-          {/*color: 'black',*/}
-          {/*fontStyle: 'italic',*/}
-          {/*borderColor: 'black'*/}
-          {/*}}*/}
-          {/*>*/}
-          {/*UPDATE*/}
-          {/*</Button>*/}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between'
+          }}
+        >
+          <Button
+            style={{
+              width: '120px',
+              color: 'black',
+              fontStyle: 'italic',
+              borderColor: 'black'
+            }}
+            variant="outlined"
+          >
+            <Link
+              to={{
+                pathname: `/home`,
+              }}
+            >
+              Back
+            </Link>
+          </Button>
           {button}
           <Button
             onClick={() =>
@@ -328,7 +328,7 @@ class Editor extends React.Component {
             }
             variant="outlined"
             style={{
-              width: '180px',
+              width: '120px',
               color: 'black',
               fontStyle: 'italic',
               borderColor: 'black'
@@ -342,9 +342,13 @@ class Editor extends React.Component {
   }
 }
 
-const mapReduxStateToProps = state => ({
-  book: state.reducer.book,
-});
+const mapReduxStateToProps = state => {
+  return ({
+    book: state.reducer.book,
+    isFailedFetchSaveBook: state.reducer.isFailedFetchSaveBook,
+    isFetchingSaveBook: state.reducer.isFetchingSaveBook,
+  });
+};
 
 const mapDispatchToProps = (dispatch) => {
   const {
