@@ -12,18 +12,18 @@
 
 #### `Screenshots`
 
-``
+* `Home page`
 
 ![alt text](https://github.com/DmytroAksonenko/react_crud/blob/main/images/sbrc1.JPG?raw=true)
 
-``
+* `Hover menu`
 
 ![alt text](https://github.com/DmytroAksonenko/react_crud/blob/main/images/sbrc2.JPG?raw=true)
 
-``
+* `Editor page`
 
 ![alt text](https://github.com/DmytroAksonenko/react_crud/blob/main/images/sbrc3.JPG?raw=true)
 
-``
+* `Data`
 
 ![alt text](https://github.com/DmytroAksonenko/react_crud/blob/main/images/sbrc4.JPG?raw=true)
